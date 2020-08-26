@@ -1,1 +1,1 @@
-FLASK_APP=kaehcle.py
+FLASK_APP=kaehcle.pygit
