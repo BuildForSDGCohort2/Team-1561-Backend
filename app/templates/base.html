@@ -1,14 +1,27 @@
 <html>
     <head>
-      {% if title %}
-      <title>{{ title }} - Kaehcle</title>
-      {% else %}
-      <title>Welcome to Kaehcle</title>
-      {% endif %}
+        {% if title %}
+        <title>{{ title }} - kaehcle</title>
+        {% else %}
+        <title>kaehcle</title>
+        {% endif %}
     </head>
     <body>
-        <div>Kaehcle: <a href="/index">Home</a></div>
+        <div>
+            Kaehcle:
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('login') }}">Create a Shop</a>
+        </div>
         <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </body>
 </html>
