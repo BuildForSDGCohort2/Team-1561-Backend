@@ -1,7 +1,8 @@
 from datetime import datetime
-from app import db, login, app
+from app import db, login
 from flask_login import UserMixin
 from hashlib import md5
+from flask import current_app
 import jwt
 from time import time
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,6 +11,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     password_hash = db.Column(db.String(128))
 
@@ -30,7 +32,7 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     @staticmethod
     def verify_reset_password_token(token):
