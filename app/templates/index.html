@@ -2,15 +2,53 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
-    {% for post in posts %}
-        {% include '_post.html' %}
+    <!--h1>Hi, {{ current_user.username }}!</h1-->
+
+<div class="display">
+	<div class="displayCategory" >
+		<h2>Shop by Category: </h2>
+		<ul>
+			{% for row in categoryData %}
+			<li><a href="{{ url_for('main.displayCategory') }}">{{ _('row.category_name') }}</a></li>
+			<!--li><a href="/displayCategory?categoryId={{row.categoryid}}">{{row.category_name}}</a></li-->
+			{% endfor %}
+		</ul>
+	</div>
+	<div>
+		<h2>Items</h2>
+		{% for data in itemData %}
+		<table>
+			<tr id="productName">
+				{% for row in data %}
+				<td>
+					{{row['name']}}
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productImage">
+				{% for row in data %}
+				<td>
+					<!--a href="main.productDescription}}">
+						<img src={{ url_for('static', filename='uploads/' + row.image) }} id="itemImage" />
+					</a-->
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productPrice">
+				{% for row in data %}
+				<td>
+					$ {{row.discounted_price}}
+				</td>
+				{% endfor %}
+			</tr>
+		</table>
+		{% endfor %}
+	</div>
+	{% for file in files %}
+	  <!--img src="{{ url_for('main.upload', filename=file) }}" -->
+	  img src="{{ url_for('main.upload', filename=file)}}
     {% endfor %}
-    <nav aria-label="...">
+    <!--nav aria-label="...">
         <ul class="pager">
             <li class="previous{% if not prev_url %} disabled{% endif %}">
                 <a href="{{ prev_url or '#' }}">
@@ -23,5 +61,5 @@
                 </a>
             </li>
         </ul>
-    </nav>
+    </nav-->
 {% endblock %}
