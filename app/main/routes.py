@@ -1,16 +1,10 @@
 from datetime import datetime
-<<<<<<< HEAD
 from flask import render_template, flash, redirect, url_for, abort, request, \
     jsonify, current_app, send_from_directory
-=======
-from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
 from flask_login import current_user, login_required
 from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
-<<<<<<< HEAD
 from werkzeug.utils import secure_filename
 from app.main.forms import *
 from app.models import User, Post, Product, Category, ProductCategory
@@ -19,25 +13,11 @@ import secrets, os,imghdr
 
 
 
-=======
-from app.main.forms import EditProfileForm, EmptyForm, PostForm
-from app.models import User, Post
-from app.main import bp
-
-
-@bp.before_app_request
-def before_request():
-    if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
-        db.session.commit()
-    g.locale = str(get_locale())
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
 
 
 @bp.route('/')
 @bp.route('/index')
 def index():
-<<<<<<< HEAD
 
     productCountinKartForGivenUser = getLoginUserDetails()
     allProductDetails = getAllProducts()
@@ -47,20 +27,13 @@ def index():
     return render_template('index.html', title=_('Home'), files=files, itemData=allProductsMassagedDetails, 
                            productCountinKartForGivenUser=productCountinKartForGivenUser,
                            categoryData=categoryData)
-=======
-    
-    return render_template('index.html', title=_('Home'))
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
 
 
 @bp.route('/dashboard')
 @login_required
 def explore():
-<<<<<<< HEAD
     
         
-=======
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
@@ -68,13 +41,8 @@ def explore():
         if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) \
         if posts.has_prev else None
-<<<<<<< HEAD
     return render_template('dashboard.html', title=_('Dashboard'), 
                            posts=posts, next_url=next_url,
-=======
-    return render_template('index.html', title=_('Dashboard'),
-                           posts=posts.items, next_url=next_url,
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
                            prev_url=prev_url)
 
 
@@ -110,7 +78,6 @@ def edit_profile():
     return render_template('edit_profile.html', title=_('Edit Profile'),
                            form=form)
 
-<<<<<<< HEAD
 @bp.route('/product/new', methods=['GET', 'POST'])
 def addProduct():
     form = addProductForm()
@@ -198,6 +165,4 @@ def validate_image(stream):
 @bp.route('/uploads/<filename>')
 def upload(filename):
     return send_from_directory(current_app.config['UPLOAD_PATH'], filename)
-=======
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
 

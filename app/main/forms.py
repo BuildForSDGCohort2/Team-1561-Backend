@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, IntegerField, RadioField, FloatField, SelectField
@@ -6,14 +5,6 @@ from wtforms.validators import ValidationError, DataRequired, Length
 from flask_wtf.file import FileField, FileAllowed
 from flask_babel import _, lazy_gettext as _l
 from app.models import User, Cart, Product, Category, ProductCategory
-=======
-from flask import request
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, DataRequired, Length
-from flask_babel import _, lazy_gettext as _l
-from app.models import User
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
 
 
 class EditProfileForm(FlaskForm):
@@ -39,7 +30,6 @@ class EmptyForm(FlaskForm):
 
 class PostForm(FlaskForm):
     post = TextAreaField(_l('Say something'), validators=[DataRequired()])
-<<<<<<< HEAD
     submit = SubmitField(_l('Submit'))
 
 
@@ -122,6 +112,3 @@ def massageItemData(data):
             i += 1
         ans.append(curr)
     return ans
-=======
-    submit = SubmitField(_l('Submit'))
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
