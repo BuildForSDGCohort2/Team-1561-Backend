@@ -14,11 +14,4 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['mucheru@outlook.com']
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
-<<<<<<< HEAD
     POSTS_PER_PAGE = 25
-    MAX_CONTENT_LENGTH= 1024 * 1024
-    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']
-    UPLOAD_PATH = 'app/static/uploads'
-=======
-    POSTS_PER_PAGE = 25
->>>>>>> 9481237a9a539780a00a5e937848c444e91ebe29
