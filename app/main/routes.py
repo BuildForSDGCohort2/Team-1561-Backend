@@ -18,13 +18,19 @@ import secrets, os,imghdr
 @bp.route('/')
 @bp.route('/index')
 def index():
+    itemData = Product.query.join(ProductCategory, Product.productid == ProductCategory.productid) \
+        .add_columns(Product.productid, Product.product_name,Product.regular_price, Product.discounted_price, Product.description,
+                     Product.image, Product.quantity) \
+        .join(Category, Category.categoryid == ProductCategory.categoryid) \
+        .order_by(Category.categoryid.desc()) \
+        .all()
 
     productCountinKartForGivenUser = getLoginUserDetails()
     allProductDetails = getAllProducts()
     allProductsMassagedDetails = massageItemData(allProductDetails)
     categoryData = getCategoryDetails()
     files = os.listdir(current_app.config['UPLOAD_PATH'])
-    return render_template('index.html', title=_('Home'), files=files, itemData=allProductsMassagedDetails, 
+    return render_template('index.html', title=_('Home'), files=files, itemData=itemData, itemDat=allProductsMassagedDetails, 
                            productCountinKartForGivenUser=productCountinKartForGivenUser,
                            categoryData=categoryData)
 

@@ -6,30 +6,13 @@
 <link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css')}} />
 </head>
 <body>
-<div id="title">
-	<form>
-		<input id="searchBox" type="text" name="searchQuery">
-		<input id="searchButton" type="submit" value="Search">
-	</form>
 
-	<div id="kart">
-		<a class="link" href="/cart">
-			<img src={{url_for('static', filename='images/shoppingCart.png')}} id="cartIcon" />
-			CART {{noOfItems}}
-		</a>
-	</div>
-	<div id="home">
-		<a class="link" href="/home">
-			<img src={{url_for('static', filename='images/logo.png')}} id="logoIcon" />
-		</a>
-	</div>
-</div>
 <div id="display">
 	<div id="productName">
-		<h1>{{data.product_name}}</h1>
+		<h1>{{item.product_name}}</h1>
 	</div>
 	<div>
-		<img src={{url_for('static', filename='uploads/'+data.image) }} id="productImage"/>
+		<img src={{url_for('static', filename='uploads/'+item.image) }} id="productImage"/>
 	</div>
 
 	<div id="productDescription">
@@ -37,23 +20,23 @@
 		<table id="descriptionTable">
 			<tr>
 				<td>Name</td>
-				<td>{{data.description}}</td>
+				<td>{{item.description}}</td>
 			</tr>
 			<tr>
 				<td>Regular Price</td>
-				<td>$ {{data.regular_price}}</td>
+				<td>$ {{item.regular_price}}</td>
 			</tr>
             <tr>
 				<td>Discounted Price</td>
-				<td>$ {{data.discounted_price}}</td>
+				<td>$ {{item.discounted_price}}</td>
 			</tr>
 			<tr>
 				<td>Stock</td>
-				<td>{{data.quantity}}</td>
+				<td>{{item.quantity}}</td>
 			</tr>
 		</table>
 		<h2>Description</h2>
-		<p>{{data['description']}}</p>
+		<p>{{item['description']}}</p>
 	</div>
 	<div id="addToCart">
 		<a href="/addToCart?productId={{request.args.get('productId')}}">Add to Cart</a>

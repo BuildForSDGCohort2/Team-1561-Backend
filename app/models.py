@@ -65,9 +65,9 @@ class Product(db.Model):
     description = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    regular_price = db.Column(db.DECIMAL)
-    discounted_price = db.Column(db.DECIMAL)
-    product_rating = db.Column(db.DECIMAL)
+    regular_price = db.Column(db.Float)
+    discounted_price = db.Column(db.Float)
+    product_rating = db.Column(db.Float)
     product_review = db.Column(db.String(100), nullable=True)
 
     def __repr__(self):
@@ -106,7 +106,7 @@ class Order(db.Model):
     __table_args__ = {'extend_existing': True}
     orderid = db.Column(db.Integer, primary_key=True)
     order_date = db.Column(db.DateTime, nullable=False)
-    total_price = db.Column(db.DECIMAL, nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
     userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, primary_key=True)
 
     def __repr__(self):
