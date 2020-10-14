@@ -111,12 +111,25 @@ def addProduct():
                            form=form)
 
 @bp.route('/cart')
+@login_required
 def cart():
-    loggedIn, firstName, productCountinKartForGivenUser = getLoginUserDetails()
+    productCountinKartForGivenUser = getLoginUserDetails()
     cartdetails, totalsum, tax = getusercartdetails();
     return render_template("cart.html", cartData=cartdetails,
-                               productCountinKartForGivenUser=productCountinKartForGivenUser, loggedIn=loggedIn,
-                               firstName=firstName, totalsum=totalsum, tax=tax)
+                               productCountinKartForGivenUser=productCountinKartForGivenUser, 
+                               totalsum=totalsum, tax=tax)
+
+@bp.route('/addToCart')
+def addToCart():
+    productId = int(request.args.get('Product.productid'))
+
+        # Using Flask-SQLAlchmy SubQuery
+    extractAndPersistKartDetailsUsingSubquery(productId)
+
+        # Using Flask-SQLAlchmy normal query
+        # extractAndPersistKartDetailsUsingkwargs(productId)
+    flash('Item successfully added to cart !!', 'success')
+    return redirect(url_for('main.index'))
 
 
 @bp.route('/category/new', methods=['GET', 'POST'])

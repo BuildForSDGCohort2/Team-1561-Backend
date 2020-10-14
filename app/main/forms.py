@@ -66,8 +66,9 @@ class addCategoryForm(FlaskForm):
     category_name = StringField('Category Name', validators=[DataRequired()])
     submit = SubmitField('Save')
 
+
 def getusercartdetails():
-    userId = User.query.with_entities(User.userid).filter(User.email == session['email']).first()
+    userId = User.query.with_entities(User.id).filter(User.email == current_user.email).first()
 
     productsincart = Product.query.join(Cart, Product.productid == Cart.productid) \
         .add_columns(Product.productid, Product.product_name, Product.discounted_price, Cart.quantity, Product.image) \
@@ -112,3 +113,20 @@ def massageItemData(data):
             i += 1
         ans.append(curr)
     return ans
+
+# Using Flask-SQL Alchemy SubQuery
+def extractAndPersistKartDetailsUsingSubquery(productId):
+    userId = User.query.with_entities(User.userid).filter(User.email == session['email']).first()
+    userId = userId[0]
+
+    subqury = Cart.query.filter(Cart.userid == userId).filter(Cart.productid == productId).subquery()
+    qry = db.session.query(Cart.quantity).select_entity_from(subqury).all()
+
+    if len(qry) == 0:
+        cart = Cart(userid=userId, productid=productId, quantity=1)
+    else:
+        cart = Cart(userid=userId, productid=productId, quantity=qry[0][0] + 1)
+
+    db.session.merge(cart)
+    db.session.flush()
+    db.session.commit()
